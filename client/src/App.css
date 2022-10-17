@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
   display: flex;
@@ -6,46 +7,54 @@
   align-items: center;
 }
 
-input, button{
-  margin: 3px;
-  font-weight: 500;
-  height: 23px;
-  font-size: 15px;
+form{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  font-weight: 400;
 }
 
-
-table {
+table{
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 60%;
 }
 
-td, th {
-  border: 1px solid #ddd;
+table td, table th {
+  border: 2px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
-tr:nth-child(even){background-color: #f2f2f2;}
-tr:hover {background-color: #ddd;}
-th {
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: darkslategrey;
+  background-color: #282828;
   color: white;
 }
 
 .editButton{
-  background-color: darkcyan;
+  font-size: 15px;
+  padding: 5px;
+  font-weight: 400;
+  background-color: #33FF00;
   color: white;
-  border: none;
   border-radius: 10%;
+  border: none;
+
 }
 
-.deleteButton{
-  background-color: red;
+.delButton{
+  font-size: 15px;
+  padding: 5px;
+  font-weight: 400;
+  background-color: #660000;
   color: white;
-  border: none;
   border-radius: 10%;
+  border: none
 }

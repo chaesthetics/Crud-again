@@ -1,86 +1,87 @@
-import React, { useState, useEffect } from "react";
+
+import { useState, useEffect } from 'react';
 import './App.css';
-import Axios from "axios"
-
-
+import axios from 'axios';
 
 function App() {
-  
-  const [studentId, setID] = useState(0)
-  const [fname, setFname] = useState("")
-  const [course, setCourse] = useState("")
-  const [section, setSection] = useState("")
 
-  const [studentlist, setStudentList] = useState([])
+const [studentId, setStudentId] = useState(0)
+const [fname, setFname] = useState("")
+const [course, setCourse] = useState("")
+const [section, setSection] = useState("")
 
-  useEffect(()=>{
-    Axios.get('http://localhost:3001/read').then((response)=>{
-      setStudentList(response.data)
-    })
-  }, [])
+const [studentList, setStudentList] = useState([])
 
-  const addToList = ()=>{
-    Axios.post('http://localhost:3001/insert', {
-      studentId: studentId,
-      fname: fname, 
-      course: course, 
-      section: section
-    })
-  }
-  
-  
+const addToList = ()=>{
+  axios.post('http://localhost:3001/insert', {
+    studentId: studentId,
+    fname: fname,
+    course: course,
+    section: section,
+  })
+}
+
+useEffect(()=>{
+  axios.get('http://localhost:3001/read').then((response)=>{
+    setStudentList(response.data)
+  })
+
+}, [])
+
+const deleteStudent = (id) =>{
+  axios.delete(`http://localhost:3001/delete/${id}`)
+}
+
+
   return (
     
     <div className="App">
-    <h2>Crud operation using MERN stack</h2>
-    <label>LN number: </label>
-    <input type="number"
-    onChange={
-      (event)=>{
-        setID(event.target.value)
-      }
-    }
-    ></input>
-    <label>Fullname: </label>
-    <input type="text"
-    onChange={
-      (event)=>{
-        setFname(event.target.value)
-      }
-    }
-    ></input>
-    <label>Course: </label>
-    <input type="text"
-    onChange={
-      (event)=>{
-        setCourse(event.target.value)
-      }
-    }
-    ></input>
-    <label>Section: </label>
-    <input type="text"
-    onChange={
-      (event)=>{
-        setSection(event.target.value)
-      }
-    }
-    ></input>
-    <button onClick={addToList}>Add to List</button><br/>
-    <table>
-      <th>LN number</th>
-      <th>Fullname</th>
-      <th>Course</th>
-      <th>Action</th>
-    {studentlist.map((value, key)=>{
-      return <tr>
-        <td>{value.studentId}</td>
-        <td>{value.fullName}</td>
-        <td>{value.course}</td>
-        <td><button class="editButton">Edit</button>/<button class="deleteButton">Delete</button></td>
-      </tr>
-    })}
-    </table>
-    
+      <h3>Add Student</h3>
+      <form>
+        <label>Student Id</label>
+        <input type="number" id="studId" onChange={
+          (event)=>{
+setStudentId(event.target.value)
+          }
+        }
+        />
+        <label>Full name</label>
+        <input type="text" id="fullName" onChange={
+          (event)=>{
+            setFname(event.target.value)
+          }
+        }/>
+        <label>Course</label>
+        <input type="text" id="course" onChange={
+          (event)=>{
+            setCourse(event.target.value)
+          }
+        }/>
+        <label>Section</label>
+        <input type="text" id="section" onChange={
+          (event)=>{
+            setSection(event.target.value)
+          }
+        }/>
+        <input type="submit" onClick={addToList}/>
+      </form><br></br>
+      <table>
+        <th>ID</th>
+        <th>FullName</th>
+        <th>Course</th>
+        <th>Operation</th>
+        {studentList.map((value, key)=>{
+          return <tr>
+            <td>{value.studentId}</td>
+            <td>{value.fullName}</td>
+            <td>{value.course}</td>
+            <td><button class="editButton"><b>EDIT</b></button>  /  <button class="delButton" onClick={()=>deleteStudent(value._id)}><b>DELETE</b></button></td>
+          </tr>
+
+      
+
+        })}
+      </table>
     </div>
   );
 }
